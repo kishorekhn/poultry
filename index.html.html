@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Diagnosis</title>
+    <style>
+        body,html
+     {
+            background-image: url('./chick.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+           
+        }
+
+        center {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        #imageUpload {
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .image-section {
+            display: none;
+        }
+
+        #imagePreview {
+            width: 300px;
+            height: 300px;
+        }
+
+        #btn-predict {
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .loader {
+            display: none;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #result {
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <center>
+        <br>
+        <h2>Poultry Disease Diagnosis</h2>
+        <br>
+
+        <form id="upload-file" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" id="imageUpload" accept=".png, .jpg, .jpeg">
+        </form>
+
+        <div class="image-section">
+            <img id="imagePreview" class="img-responsive" src="#" style="width:300px;height:300px;"><br><br>
+            <div>
+                <button type="button" id="btn-predict">Predict!</button>
+            </div>
+        </div>
+
+        <div class="loader"></div>
+
+        <h3 id="result">
+            <span>{{result}}</span>
+        </h3>
+
+    </center>
+    <br>
+    <br>
+
+    <script>
+        document.getElementById('imageUpload').addEventListener('change', function () {
+            var input = this;
+            var imagePreview = document.getElementById('imagePreview');
+            var file = input.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+                document.querySelector('.image-section').style.display = 'block';
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('btn-predict').addEventListener('click', function () {
+        var input = document.getElementById('imageUpload');
+        var file = input.files[0];
+
+        if (file) {
+            // Change the form action to '/predict'
+            document.getElementById('upload-file').action = '/predict';
+
+            // Submit the form
+            document.getElementById('upload-file').submit();
+        } else {
+            alert('Please select a file before predicting.');
+        }
+    });
+    </script>
+
+</body>
+
+</html>
