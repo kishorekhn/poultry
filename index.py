@@ -6,4 +6,4 @@ def home():
     return render_template('index.html')
 
 if _name_="_main_":
-    app.run(debug=false,host='0.0.0.')
+    app.run(debug=false,host='0.0.0.0')
